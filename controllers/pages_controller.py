@@ -1,5 +1,5 @@
 from models.Page import Page
-from schemas.PageSchema import page_schema
+from schemas.PageSchema import page_schema, pages_schema
 from main import db
 from flask import Blueprint, json, request, jsonify, abort
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -11,7 +11,7 @@ pages = Blueprint('pages', __name__, url_prefix="/pages")
 @pages.route("/", methods=["GET"])
 def pages_index():
     pages = Page.query.all()
-    return jsonify(page_schema.dump(pages))
+    return jsonify(pages_schema.dump(pages))
 
 @pages.route("/", methods=["POST"])
 def page_create():

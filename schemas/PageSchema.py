@@ -9,4 +9,4 @@ class PageSchema(ma.SQLAlchemyAutoSchema):
     page_content = ma.String(required=True, validate=Length(min=1))
     
 page_schema = PageSchema()
-page_schemas = PageSchema(many=True)
+pages_schemas = PageSchema(many=True)
