@@ -1,7 +1,7 @@
 from models.Page import Page
 from schemas.PageSchema import page_schema, pages_schema
 from main import db
-from flask import Blueprint, json, request, jsonify, abort
+from flask import Blueprint, json, request, jsonify, abort, render_template
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.orm import joinedload
 
@@ -18,7 +18,8 @@ def pages_index():
     ON p.book_id = b.id; 
     """
     pages = db.engine.execute(query)
-    return jsonify(pages_schema.dump(pages))
+    # return jsonify(pages_schema.dump(pages))
+    return render_template("pages.html", pages=pages)
 
 @pages.route("/", methods=["POST"])
 def page_create():

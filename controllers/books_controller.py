@@ -2,7 +2,7 @@ from models.Book import Book
 from models.User import User
 from main import db
 from schemas.BookSchema import book_schema, books_schema
-from flask import Blueprint, request, jsonify, abort
+from flask import Blueprint, request, jsonify, abort, render_template
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from services.auth_service import verify_user
 from sqlalchemy.orm import joinedload
@@ -13,7 +13,8 @@ books = Blueprint('books', __name__, url_prefix="/books")
 def book_index():
     #Retrieve all books
     books = Book.query.options(joinedload("user")).all()
-    return jsonify(books_schema.dump(books))
+    # return jsonify(books_schema.dump(books))
+    return render_template("books.html", books=books)
 
 @books.route("/", methods=["POST"])
 @jwt_required

@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    {% for book in books %}
+    <div class="col px-md-5"><div class="p-3 border bg-light">
+                <div class="card" >
+                    <div class="card-body">
+                        <h5 class="card-title">{{book.title}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{book.author}}</h6>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% endfor %}
+{% endblock %}
