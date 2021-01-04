@@ -9,4 +9,4 @@ class Page(db.Model):
     book_id = db.Column(db.Integer, db.ForeignKey("books.id"), nullable=False)
 
     def __repr__(self):
-        return f"<Page {self.page_number}>"
+        return f"<Page {self.page_number}, Book: {self.id}>"
