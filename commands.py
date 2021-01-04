@@ -35,6 +35,7 @@ def seed_db():
         book = Book()
         book.title = faker.catch_phrase()
         book.user_id = random.choice(users).id
+        book.author = faker.name()
         db.session.add(book)
     
     db.session.commit()
