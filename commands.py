@@ -13,6 +13,7 @@ def drop_db():
 def seed_db():
     from models.Book import Book
     from models.User import User
+    from models.Page import Page
     from main import bcrypt
     from faker import Faker
     import random
@@ -36,4 +37,12 @@ def seed_db():
         db.session.add(book)
     
     db.session.commit()
+
+    for i in range(100):
+        page = Page()
+        page.page_content = faker.text(1500)
+        page.page_number = random.randint(1, 300)
+        db.session.add(page)
+    db.session.commit()
+
     print("Tables seeded")
