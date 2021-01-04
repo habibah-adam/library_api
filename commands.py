@@ -1,3 +1,4 @@
+from random import randint
 from main import db
 from flask import Blueprint
 
@@ -42,6 +43,7 @@ def seed_db():
         page = Page()
         page.page_content = faker.text(1500)
         page.page_number = random.randint(1, 300)
+        page.book_id = random.randint(1, 20)
         db.session.add(page)
     db.session.commit()
 
