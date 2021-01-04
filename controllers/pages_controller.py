@@ -10,7 +10,14 @@ pages = Blueprint('pages', __name__, url_prefix="/pages")
 
 @pages.route("/", methods=["GET"])
 def pages_index():
-    pages = Page.query.all()
+    #pages = Page.query.all()
+    query = """
+    SELECT p.id, p.page_number, b.id as book_id, b.title, p.page_content
+    FROM pages p
+    INNER JOIN books b
+    ON p.book_id = b.id; 
+    """
+    pages = db.engine.execute(query)
     return jsonify(pages_schema.dump(pages))
 
 @pages.route("/", methods=["POST"])
@@ -19,7 +26,7 @@ def page_create():
 
     new_page = Page()
     new_page.page_number = page_fields["page_number"]
-    new_page.page_content = page_fields["content"]
+    new_page.page_content = page_fields["page_content"]
     new_page.book_id = page_fields["book_id"]
 
     db.session.add(new_page)
@@ -34,11 +41,11 @@ def page_show(id):
 
 @pages.route("/<int:id>", methods=["PUT", "UPDATE"])
 def page_update(id):
-    page = Page.query.filter_by(id)
+    page = Page.query.get(id)
     page_fields = page_schema.load(request.json)
-    page.update(page_fields)
+    page.page_content = page_fields['page_content']
     db.session.commit()
-    return jsonify(page_schema.dump(page[0]))
+    return jsonify(page_schema.dump(page))
 
 @pages.route("/<int:id>", methods=["DELETE"])
 def page_delete(id):
