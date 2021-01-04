@@ -9,6 +9,7 @@ class Book(db.Model):
     author = db.Column(db.String())
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     book_image = db.relationship("BookImage", backref="book", uselist=False)
+    page = db.relationship("Page", backref="page", lazy="dynamic")
 
     def __repr__(self):
         return f"<Book {self.title}>"

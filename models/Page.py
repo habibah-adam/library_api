@@ -6,7 +6,7 @@ class Page(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     page_number = db.Column(db.Integer, nullable=False)
     page_content = db.Column(db.Text())
-    book_id = db.Column(db.Integer, db.ForeignKey("book.id"), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey("books.id"), nullable=False)
 
     def __repr__(self):
         return f"<Page {self.page_number}, Book: {self.book_id}>"
