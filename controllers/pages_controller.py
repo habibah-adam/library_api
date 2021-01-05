@@ -21,6 +21,17 @@ def pages_index():
     # return jsonify(pages_schema.dump(pages))
     return render_template("pages.html", pages=pages)
 
+@pages.route("/numberOfPages", methods=["GET"])
+def page_wordcound(id):
+    query = """
+    SELECT b.title, count(p.page_number) 
+    FROM pages p
+    INNER JOIN books b
+    GROUP BY b.title;
+    """
+    pages_count = db.engine.execute(query)
+    return jsonify(pages_schema.dump(pages))
+
 @pages.route("/", methods=["POST"])
 def page_create():
     page_fields = page_schema.load(request.json)
